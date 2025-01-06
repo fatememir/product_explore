@@ -22,4 +22,15 @@ class ProductRepositoryImpl implements ProductRepository {
       return Left(ServerFailure("error"));
     }
   }
+
+  @override
+  Future<Either<Failure, Product>> getProductDetails(int productId) async {
+    var result = await remoteDataSource.fetchProductDetails(productId);
+
+    if (result.id != 0) {
+      return Right(result);
+    } else {
+      return Left(ServerFailure("error"));
+    }
+  }
 }

@@ -6,6 +6,8 @@ import '../models/product/product_model.dart';
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> fetchProducts(int limit, int offset);
+
+  Future<ProductModel> fetchProductDetails(int id);
 }
 
 @Injectable(as: ProductRemoteDataSource)
@@ -24,5 +26,14 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
         return productsList.map((item) => ProductModel.fromJson(item)).toList();
       },
     );
+  }
+
+  @override
+  Future<ProductModel> fetchProductDetails(int id) async {
+    final response = await httpClient.safeGet<ProductModel>(
+      'products/$id',
+      (json) => ProductModel.fromJson(json),
+    );
+    return response;
   }
 }
