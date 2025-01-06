@@ -18,8 +18,11 @@ import '../../feature/product/data/repositories/product_repository_impl.dart'
     as _i319;
 import '../../feature/product/domain/repositories/product_repository.dart'
     as _i879;
+import '../../feature/product/domain/usecases/get_product_details.dart' as _i84;
 import '../../feature/product/domain/usecases/get_products.dart' as _i484;
 import '../../feature/product/presentation/bloc/product_bloc.dart' as _i863;
+import '../../feature/product/presentation/bloc/product_detail/product_detail_bloc.dart'
+    as _i1044;
 import 'network_module.dart' as _i567;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -41,6 +44,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i319.ProductRepositoryImpl(gh<_i315.ProductRemoteDataSource>()));
     gh.lazySingleton<_i484.GetProductsUsecase>(
         () => _i484.GetProductsUsecase(gh<_i879.ProductRepository>()));
+    gh.lazySingleton<_i84.GetProductDetailsUsecase>(
+        () => _i84.GetProductDetailsUsecase(gh<_i879.ProductRepository>()));
+    gh.factory<_i1044.ProductDetailBloc>(() => _i1044.ProductDetailBloc(
+        getProductDetails: gh<_i84.GetProductDetailsUsecase>()));
     gh.factory<_i863.ProductBloc>(
         () => _i863.ProductBloc(getProducts: gh<_i484.GetProductsUsecase>()));
     return this;
