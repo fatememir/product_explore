@@ -1,5 +1,7 @@
 import 'package:injectable/injectable.dart';
+import 'package:dartz/dartz.dart';
 
+import '../../../../core/error/exception/failure.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/product_repository.dart';
 import '../datasources/product_remote_datasource.dart';
@@ -11,7 +13,13 @@ class ProductRepositoryImpl implements ProductRepository {
   ProductRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<Product>> getProducts(int limit, int offset) {
-    return remoteDataSource.fetchProducts(limit, offset);
+  Future<Either<Failure, List<Product>>> getProducts(int limit, int offset) async {
+    var result = await remoteDataSource.fetchProducts(limit, offset);
+
+    if (!result.contains("error")) {
+      return Right(result);
+    } else {
+      return Left(ServerFailure("error"));
+    }
   }
 }
