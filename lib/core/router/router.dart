@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:product_explore/feature/product/presentation/screens/product_page.dart';
 
 import '../../feature/splash/preesentation/screens/splash_screen.dart';
 
@@ -18,6 +19,21 @@ class AppRouter {
         GoRoute(
           path: '/splash',
           builder: (context, state) => SplashScreen(),
+        ),
+        GoRoute(
+          path: '/product',
+          routes: [],
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              child: ProductPage(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+            );
+          },
         ),
       ],
     );
