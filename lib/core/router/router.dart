@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../feature/presentation/screens/splash_screen.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
@@ -12,7 +14,12 @@ class AppRouter {
     _router = GoRouter(
       initialLocation: '/splash',
       navigatorKey: navigatorKey,
-      routes: [],
+      routes: [
+        GoRoute(
+          path: '/splash',
+          builder: (context, state) => SplashScreen(),
+        ),
+      ],
     );
   }
 }
