@@ -12,6 +12,9 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../feature/product/domain/repositories/product_repository.dart'
+    as _i879;
+import '../../feature/product/domain/usecases/get_products.dart' as _i484;
 import 'network_module.dart' as _i567;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -27,6 +30,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final networkModule = _$NetworkModule();
     gh.lazySingleton<_i361.Dio>(() => networkModule.httpClient);
+    gh.lazySingleton<_i484.GetProductsUsecase>(
+        () => _i484.GetProductsUsecase(gh<_i879.ProductRepository>()));
     return this;
   }
 }

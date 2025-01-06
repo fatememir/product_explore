@@ -1,13 +1,13 @@
 class Product {
-  final int id;
-  final String title;
-  final double price;
-  final double rating;
-  final String description;
-  final String brand;
-  final String category;
-  final String thumbnail;
-  final int stock;
+  final int? id;
+  final String? title;
+  final double? price;
+  final double? rating;
+  final String? description;
+  final String? brand;
+  final String? category;
+  final String? thumbnail;
+  final int? stock;
 
   Product(
       {required this.id,
