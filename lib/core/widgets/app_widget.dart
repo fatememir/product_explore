@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../router/router.dart';
-import '../themes/dark_color_scheme.dart';
-import '../themes/light_color_scheme.dart';
+import '../themes/app_theme.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -16,8 +15,8 @@ class AppWidget extends StatelessWidget {
       routeInformationParser: AppRouter.router.routeInformationParser,
       routeInformationProvider: AppRouter.router.routeInformationProvider,
       // theme
-      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      theme: CustomTheme.lightTheme,
+      darkTheme: CustomTheme.darkTheme,
       // language
       locale: const Locale('en', ''),
     );
