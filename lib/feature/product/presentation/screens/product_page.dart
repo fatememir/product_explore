@@ -129,6 +129,8 @@ class _ProductPageState extends State<ProductPage> {
         return ProductListItem(
           product: product,
           onPressed: (id) {
+            _searchController.clear();
+
             context.read<ProductBloc>().add(
               NavigateToDetailEvent(
                 context: context,
