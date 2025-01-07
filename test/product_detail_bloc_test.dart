@@ -6,7 +6,6 @@ import 'package:product_explore/feature/product/domain/entities/product.dart';
 import 'package:product_explore/feature/product/domain/usecases/get_product_details.dart';
 import 'package:product_explore/feature/product/presentation/bloc/product_detail/product_detail_bloc.dart';
 
-// Create mock for GetProductDetailsUsecase
 class MockGetProductDetailsUsecase extends Mock implements GetProductDetailsUsecase {}
 
 void main() {
@@ -38,14 +37,14 @@ void main() {
       'should get data from the get product detail use case',
           () async {
         // arrange
-        when(mockGetProductDetailsUsecase(any)).thenAnswer((_) async => Right(productDetail)); // Correctly mock the method
+        when(mockGetProductDetailsUsecase(any)).thenAnswer((_) async => Right(productDetail));
 
         // act
         bloc.add(FetchProductDetails(productId: 1));
-        await untilCalled(mockGetProductDetailsUsecase(any));  // Wait until mock is called
+        await untilCalled(mockGetProductDetailsUsecase(any));
 
         // assert
-        verify(mockGetProductDetailsUsecase(1)); // Verify if the correct productId was passed
+        verify(mockGetProductDetailsUsecase(1));
       },
     );
 
