@@ -22,17 +22,18 @@ class ProductDetailsPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is Loaded) {
             final product = state.productDetail;
-            return Padding(
+            return SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
-              child: ListView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: product.thumbnail != null
                         ? cashImage(
-                            product.thumbnail,
-                            height: 250,
-                          )
+                      product.thumbnail,
+                      height: 250,
+                    )
                         : const Placeholder(fallbackHeight: 250, fallbackWidth: double.infinity),
                   ),
                   const SizedBox(height: 16),
@@ -57,7 +58,7 @@ class ProductDetailsPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.category, color: Colors.amber, size: 20),
+                      const Icon(Icons.category, color: Colors.amber, size: 20),
                       const SizedBox(width: 4),
                       Text(
                         '${product.category}',
@@ -65,6 +66,7 @@ class ProductDetailsPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8),
                   Text(
                     'Stock: ${product.stock?.toString()}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green[700]),
