@@ -48,16 +48,27 @@ class ProductDetailsPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
+                  Text(
+                    'Brand: ${product.brand}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green[700]),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.star, color: Colors.amber, size: 20),
+                      Icon(Icons.category, color: Colors.amber, size: 20),
                       const SizedBox(width: 4),
                       Text(
-                        '${product.rating}',
+                        '${product.category}',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
+                  ),
+                  Text(
+                    'Stock: ${product.stock?.toString()}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green[700]),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
                   Padding(
