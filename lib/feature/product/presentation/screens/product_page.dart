@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../../domain/entities/product.dart';
 import '../bloc/product_bloc.dart';
 import '../widget/product_list_item.dart';
@@ -31,7 +30,7 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   bool _isNearBottom() {
-    return _scrollController.position.pixels >= _scrollController.position.maxScrollExtent;
+    return _scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100;
   }
 
   void _fetchInitialProducts() {
@@ -63,32 +62,27 @@ class _ProductPageState extends State<ProductPage> {
       ),
       body: BlocListener<ProductBloc, ProductState>(
         listener: (context, state) {
-          if (state is Loaded) {
+          if (state is Loaded || state is Error) {
             setState(() {
               _isLoadingMore = false;
             });
-          } else if (state is NavigateToDetail) {
-            context.go(
-              "/product/productDetail",
-              extra: state.id,
-            );
           }
         },
         child: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
-            if (state is Initial || (state is Loading && _offset == 0)) {
+            if (state is Loading && _offset == 0) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is Loaded) {
-              return _buildProductList(state.products);
+              if (state.products.isNotEmpty) {
+                return _buildProductList(state.products);
+              } else {
+                return const Center(child: Text('No Products Found'));
+              }
             } else if (state is Error) {
               return Center(child: Text(state.message));
             }
 
-            if (state is Loaded && state.products.isNotEmpty) {
-              return _buildProductList(state.products);
-            }
-
-            return const Center(child: Text('No Products Found'));
+            return const Center(child: Text('Unexpected state'));
           },
         ),
       ),
@@ -107,7 +101,12 @@ class _ProductPageState extends State<ProductPage> {
         return ProductListItem(
           product: product,
           onPressed: (id) {
-            context.read<ProductBloc>().add(ProductEvent.navigateToDetail(id: id));
+            context.read<ProductBloc>().add(
+                  NavigateToDetailEvent(
+                    context: context,
+                    id: id,
+                  ),
+                );
           },
         );
       },

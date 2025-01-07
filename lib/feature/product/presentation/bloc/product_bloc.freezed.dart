@@ -19,19 +19,19 @@ mixin _$ProductEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int limit, int offset) fetchProducts,
-    required TResult Function(int id) navigateToDetail,
+    required TResult Function(BuildContext context, int id) navigateToDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int limit, int offset)? fetchProducts,
-    TResult? Function(int id)? navigateToDetail,
+    TResult? Function(BuildContext context, int id)? navigateToDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int limit, int offset)? fetchProducts,
-    TResult Function(int id)? navigateToDetail,
+    TResult Function(BuildContext context, int id)? navigateToDetail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -155,7 +155,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int limit, int offset) fetchProducts,
-    required TResult Function(int id) navigateToDetail,
+    required TResult Function(BuildContext context, int id) navigateToDetail,
   }) {
     return fetchProducts(limit, offset);
   }
@@ -164,7 +164,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int limit, int offset)? fetchProducts,
-    TResult? Function(int id)? navigateToDetail,
+    TResult? Function(BuildContext context, int id)? navigateToDetail,
   }) {
     return fetchProducts?.call(limit, offset);
   }
@@ -173,7 +173,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int limit, int offset)? fetchProducts,
-    TResult Function(int id)? navigateToDetail,
+    TResult Function(BuildContext context, int id)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (fetchProducts != null) {
@@ -236,7 +236,7 @@ abstract class _$$NavigateToDetailEventImplCopyWith<$Res> {
           $Res Function(_$NavigateToDetailEventImpl) then) =
       __$$NavigateToDetailEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int id});
+  $Res call({BuildContext context, int id});
 }
 
 /// @nodoc
@@ -252,9 +252,14 @@ class __$$NavigateToDetailEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? context = null,
     Object? id = null,
   }) {
     return _then(_$NavigateToDetailEventImpl(
+      context: null == context
+          ? _value.context
+          : context // ignore: cast_nullable_to_non_nullable
+              as BuildContext,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -266,14 +271,16 @@ class __$$NavigateToDetailEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
-  const _$NavigateToDetailEventImpl({required this.id});
+  const _$NavigateToDetailEventImpl({required this.context, required this.id});
 
+  @override
+  final BuildContext context;
   @override
   final int id;
 
   @override
   String toString() {
-    return 'ProductEvent.navigateToDetail(id: $id)';
+    return 'ProductEvent.navigateToDetail(context: $context, id: $id)';
   }
 
   @override
@@ -281,11 +288,12 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NavigateToDetailEventImpl &&
+            (identical(other.context, context) || other.context == context) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, context, id);
 
   /// Create a copy of ProductEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -300,29 +308,29 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int limit, int offset) fetchProducts,
-    required TResult Function(int id) navigateToDetail,
+    required TResult Function(BuildContext context, int id) navigateToDetail,
   }) {
-    return navigateToDetail(id);
+    return navigateToDetail(context, id);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int limit, int offset)? fetchProducts,
-    TResult? Function(int id)? navigateToDetail,
+    TResult? Function(BuildContext context, int id)? navigateToDetail,
   }) {
-    return navigateToDetail?.call(id);
+    return navigateToDetail?.call(context, id);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int limit, int offset)? fetchProducts,
-    TResult Function(int id)? navigateToDetail,
+    TResult Function(BuildContext context, int id)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (navigateToDetail != null) {
-      return navigateToDetail(id);
+      return navigateToDetail(context, id);
     }
     return orElse();
   }
@@ -360,9 +368,11 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
 }
 
 abstract class NavigateToDetailEvent implements ProductEvent {
-  const factory NavigateToDetailEvent({required final int id}) =
-      _$NavigateToDetailEventImpl;
+  const factory NavigateToDetailEvent(
+      {required final BuildContext context,
+      required final int id}) = _$NavigateToDetailEventImpl;
 
+  BuildContext get context;
   int get id;
 
   /// Create a copy of ProductEvent
@@ -380,7 +390,6 @@ mixin _$ProductState {
     required TResult Function() loading,
     required TResult Function(List<Product> products) loaded,
     required TResult Function(String message) error,
-    required TResult Function(int id) navigateToDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -389,7 +398,6 @@ mixin _$ProductState {
     TResult? Function()? loading,
     TResult? Function(List<Product> products)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function(int id)? navigateToDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -398,7 +406,6 @@ mixin _$ProductState {
     TResult Function()? loading,
     TResult Function(List<Product> products)? loaded,
     TResult Function(String message)? error,
-    TResult Function(int id)? navigateToDetail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -408,7 +415,6 @@ mixin _$ProductState {
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
-    required TResult Function(NavigateToDetail value) navigateToDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -417,7 +423,6 @@ mixin _$ProductState {
     TResult? Function(Loading value)? loading,
     TResult? Function(Loaded value)? loaded,
     TResult? Function(Error value)? error,
-    TResult? Function(NavigateToDetail value)? navigateToDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -426,7 +431,6 @@ mixin _$ProductState {
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
-    TResult Function(NavigateToDetail value)? navigateToDetail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -498,7 +502,6 @@ class _$InitialImpl implements Initial {
     required TResult Function() loading,
     required TResult Function(List<Product> products) loaded,
     required TResult Function(String message) error,
-    required TResult Function(int id) navigateToDetail,
   }) {
     return initial();
   }
@@ -510,7 +513,6 @@ class _$InitialImpl implements Initial {
     TResult? Function()? loading,
     TResult? Function(List<Product> products)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function(int id)? navigateToDetail,
   }) {
     return initial?.call();
   }
@@ -522,7 +524,6 @@ class _$InitialImpl implements Initial {
     TResult Function()? loading,
     TResult Function(List<Product> products)? loaded,
     TResult Function(String message)? error,
-    TResult Function(int id)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -538,7 +539,6 @@ class _$InitialImpl implements Initial {
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
-    required TResult Function(NavigateToDetail value) navigateToDetail,
   }) {
     return initial(this);
   }
@@ -550,7 +550,6 @@ class _$InitialImpl implements Initial {
     TResult? Function(Loading value)? loading,
     TResult? Function(Loaded value)? loaded,
     TResult? Function(Error value)? error,
-    TResult? Function(NavigateToDetail value)? navigateToDetail,
   }) {
     return initial?.call(this);
   }
@@ -562,7 +561,6 @@ class _$InitialImpl implements Initial {
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
-    TResult Function(NavigateToDetail value)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -621,7 +619,6 @@ class _$LoadingImpl implements Loading {
     required TResult Function() loading,
     required TResult Function(List<Product> products) loaded,
     required TResult Function(String message) error,
-    required TResult Function(int id) navigateToDetail,
   }) {
     return loading();
   }
@@ -633,7 +630,6 @@ class _$LoadingImpl implements Loading {
     TResult? Function()? loading,
     TResult? Function(List<Product> products)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function(int id)? navigateToDetail,
   }) {
     return loading?.call();
   }
@@ -645,7 +641,6 @@ class _$LoadingImpl implements Loading {
     TResult Function()? loading,
     TResult Function(List<Product> products)? loaded,
     TResult Function(String message)? error,
-    TResult Function(int id)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -661,7 +656,6 @@ class _$LoadingImpl implements Loading {
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
-    required TResult Function(NavigateToDetail value) navigateToDetail,
   }) {
     return loading(this);
   }
@@ -673,7 +667,6 @@ class _$LoadingImpl implements Loading {
     TResult? Function(Loading value)? loading,
     TResult? Function(Loaded value)? loaded,
     TResult? Function(Error value)? error,
-    TResult? Function(NavigateToDetail value)? navigateToDetail,
   }) {
     return loading?.call(this);
   }
@@ -685,7 +678,6 @@ class _$LoadingImpl implements Loading {
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
-    TResult Function(NavigateToDetail value)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -778,7 +770,6 @@ class _$LoadedImpl implements Loaded {
     required TResult Function() loading,
     required TResult Function(List<Product> products) loaded,
     required TResult Function(String message) error,
-    required TResult Function(int id) navigateToDetail,
   }) {
     return loaded(products);
   }
@@ -790,7 +781,6 @@ class _$LoadedImpl implements Loaded {
     TResult? Function()? loading,
     TResult? Function(List<Product> products)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function(int id)? navigateToDetail,
   }) {
     return loaded?.call(products);
   }
@@ -802,7 +792,6 @@ class _$LoadedImpl implements Loaded {
     TResult Function()? loading,
     TResult Function(List<Product> products)? loaded,
     TResult Function(String message)? error,
-    TResult Function(int id)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -818,7 +807,6 @@ class _$LoadedImpl implements Loaded {
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
-    required TResult Function(NavigateToDetail value) navigateToDetail,
   }) {
     return loaded(this);
   }
@@ -830,7 +818,6 @@ class _$LoadedImpl implements Loaded {
     TResult? Function(Loading value)? loading,
     TResult? Function(Loaded value)? loaded,
     TResult? Function(Error value)? error,
-    TResult? Function(NavigateToDetail value)? navigateToDetail,
   }) {
     return loaded?.call(this);
   }
@@ -842,7 +829,6 @@ class _$LoadedImpl implements Loaded {
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
-    TResult Function(NavigateToDetail value)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -936,7 +922,6 @@ class _$ErrorImpl implements Error {
     required TResult Function() loading,
     required TResult Function(List<Product> products) loaded,
     required TResult Function(String message) error,
-    required TResult Function(int id) navigateToDetail,
   }) {
     return error(message);
   }
@@ -948,7 +933,6 @@ class _$ErrorImpl implements Error {
     TResult? Function()? loading,
     TResult? Function(List<Product> products)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function(int id)? navigateToDetail,
   }) {
     return error?.call(message);
   }
@@ -960,7 +944,6 @@ class _$ErrorImpl implements Error {
     TResult Function()? loading,
     TResult Function(List<Product> products)? loaded,
     TResult Function(String message)? error,
-    TResult Function(int id)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -976,7 +959,6 @@ class _$ErrorImpl implements Error {
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
-    required TResult Function(NavigateToDetail value) navigateToDetail,
   }) {
     return error(this);
   }
@@ -988,7 +970,6 @@ class _$ErrorImpl implements Error {
     TResult? Function(Loading value)? loading,
     TResult? Function(Loaded value)? loaded,
     TResult? Function(Error value)? error,
-    TResult? Function(NavigateToDetail value)? navigateToDetail,
   }) {
     return error?.call(this);
   }
@@ -1000,7 +981,6 @@ class _$ErrorImpl implements Error {
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
-    TResult Function(NavigateToDetail value)? navigateToDetail,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1019,165 +999,5 @@ abstract class Error implements ProductState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$NavigateToDetailImplCopyWith<$Res> {
-  factory _$$NavigateToDetailImplCopyWith(_$NavigateToDetailImpl value,
-          $Res Function(_$NavigateToDetailImpl) then) =
-      __$$NavigateToDetailImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({int id});
-}
-
-/// @nodoc
-class __$$NavigateToDetailImplCopyWithImpl<$Res>
-    extends _$ProductStateCopyWithImpl<$Res, _$NavigateToDetailImpl>
-    implements _$$NavigateToDetailImplCopyWith<$Res> {
-  __$$NavigateToDetailImplCopyWithImpl(_$NavigateToDetailImpl _value,
-      $Res Function(_$NavigateToDetailImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ProductState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-  }) {
-    return _then(_$NavigateToDetailImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$NavigateToDetailImpl implements NavigateToDetail {
-  const _$NavigateToDetailImpl({required this.id});
-
-  @override
-  final int id;
-
-  @override
-  String toString() {
-    return 'ProductState.navigateToDetail(id: $id)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$NavigateToDetailImpl &&
-            (identical(other.id, id) || other.id == id));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id);
-
-  /// Create a copy of ProductState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$NavigateToDetailImplCopyWith<_$NavigateToDetailImpl> get copyWith =>
-      __$$NavigateToDetailImplCopyWithImpl<_$NavigateToDetailImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<Product> products) loaded,
-    required TResult Function(String message) error,
-    required TResult Function(int id) navigateToDetail,
-  }) {
-    return navigateToDetail(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Product> products)? loaded,
-    TResult? Function(String message)? error,
-    TResult? Function(int id)? navigateToDetail,
-  }) {
-    return navigateToDetail?.call(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Product> products)? loaded,
-    TResult Function(String message)? error,
-    TResult Function(int id)? navigateToDetail,
-    required TResult orElse(),
-  }) {
-    if (navigateToDetail != null) {
-      return navigateToDetail(id);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
-    required TResult Function(NavigateToDetail value) navigateToDetail,
-  }) {
-    return navigateToDetail(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Loading value)? loading,
-    TResult? Function(Loaded value)? loaded,
-    TResult? Function(Error value)? error,
-    TResult? Function(NavigateToDetail value)? navigateToDetail,
-  }) {
-    return navigateToDetail?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
-    TResult Function(NavigateToDetail value)? navigateToDetail,
-    required TResult orElse(),
-  }) {
-    if (navigateToDetail != null) {
-      return navigateToDetail(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class NavigateToDetail implements ProductState {
-  const factory NavigateToDetail({required final int id}) =
-      _$NavigateToDetailImpl;
-
-  int get id;
-
-  /// Create a copy of ProductState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NavigateToDetailImplCopyWith<_$NavigateToDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
