@@ -16,11 +16,15 @@ class _ProductPageState extends State<ProductPage> {
   final int _limit = 10;
   int _offset = 0;
   bool _isLoadingMore = false;
+  TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     _fetchInitialProducts();
+
+    _searchController.addListener(_onSearchChanged);
 
     _scrollController.addListener(() {
       if (_isNearBottom() && !_isLoadingMore) {
@@ -48,9 +52,18 @@ class _ProductPageState extends State<ProductPage> {
     context.read<ProductBloc>().add(ProductEvent.fetchProducts(limit: _limit, offset: _offset));
   }
 
+  void _onSearchChanged() {
+    setState(() {
+      _searchQuery = _searchController.text;
+    });
+
+    context.read<ProductBloc>().add(ProductEvent.searchProducts(query: _searchQuery));
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -59,6 +72,21 @@ class _ProductPageState extends State<ProductPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Explorer'),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search products by title...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
       body: BlocListener<ProductBloc, ProductState>(
         listener: (context, state) {
@@ -102,11 +130,11 @@ class _ProductPageState extends State<ProductPage> {
           product: product,
           onPressed: (id) {
             context.read<ProductBloc>().add(
-                  NavigateToDetailEvent(
-                    context: context,
-                    id: id,
-                  ),
-                );
+              NavigateToDetailEvent(
+                context: context,
+                id: id,
+              ),
+            );
           },
         );
       },

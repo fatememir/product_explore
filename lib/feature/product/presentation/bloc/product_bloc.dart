@@ -23,10 +23,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }) : super(ProductState.initial()) {
     on<FetchProductsEvents>(_onFetchProducts);
     on<NavigateToDetailEvent>(_onGoToProductDetail);
+    on<SearchProductsEvent>(_onSearchProducts);
   }
 
-  Future<void> _onFetchProducts(
-      FetchProductsEvents event, Emitter<ProductState> emit) async {
+  Future<void> _onFetchProducts(FetchProductsEvents event, Emitter<ProductState> emit) async {
     if (event.offset == 0) {
       emit(ProductState.loading());
     }
@@ -47,11 +47,24 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     );
   }
 
-  void _onGoToProductDetail(
-      NavigateToDetailEvent event, Emitter<ProductState> emit) {
+  void _onGoToProductDetail(NavigateToDetailEvent event, Emitter<ProductState> emit) {
     event.context.go(
       "/product/productDetail",
       extra: event.id,
     );
+  }
+
+  Future<void> _onSearchProducts(SearchProductsEvent event, Emitter<ProductState> emit) async {
+    if (_allProducts.isNotEmpty) {
+      final filteredProducts = _allProducts.where((product) {
+        return product.title!.toLowerCase().startsWith(event.query.toLowerCase());
+      }).toList();
+
+      if (filteredProducts.isEmpty) {
+        emit(ProductState.loaded(products: _allProducts));
+      } else {
+        emit(ProductState.loaded(products: filteredProducts));
+      }
+    }
   }
 }

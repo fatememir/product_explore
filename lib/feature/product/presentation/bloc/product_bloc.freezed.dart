@@ -20,18 +20,21 @@ mixin _$ProductEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int limit, int offset) fetchProducts,
     required TResult Function(BuildContext context, int id) navigateToDetail,
+    required TResult Function(String query) searchProducts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int limit, int offset)? fetchProducts,
     TResult? Function(BuildContext context, int id)? navigateToDetail,
+    TResult? Function(String query)? searchProducts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int limit, int offset)? fetchProducts,
     TResult Function(BuildContext context, int id)? navigateToDetail,
+    TResult Function(String query)? searchProducts,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$ProductEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(FetchProductsEvents value) fetchProducts,
     required TResult Function(NavigateToDetailEvent value) navigateToDetail,
+    required TResult Function(SearchProductsEvent value) searchProducts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchProductsEvents value)? fetchProducts,
     TResult? Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult? Function(SearchProductsEvent value)? searchProducts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchProductsEvents value)? fetchProducts,
     TResult Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult Function(SearchProductsEvent value)? searchProducts,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -156,6 +162,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   TResult when<TResult extends Object?>({
     required TResult Function(int limit, int offset) fetchProducts,
     required TResult Function(BuildContext context, int id) navigateToDetail,
+    required TResult Function(String query) searchProducts,
   }) {
     return fetchProducts(limit, offset);
   }
@@ -165,6 +172,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int limit, int offset)? fetchProducts,
     TResult? Function(BuildContext context, int id)? navigateToDetail,
+    TResult? Function(String query)? searchProducts,
   }) {
     return fetchProducts?.call(limit, offset);
   }
@@ -174,6 +182,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int limit, int offset)? fetchProducts,
     TResult Function(BuildContext context, int id)? navigateToDetail,
+    TResult Function(String query)? searchProducts,
     required TResult orElse(),
   }) {
     if (fetchProducts != null) {
@@ -187,6 +196,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   TResult map<TResult extends Object?>({
     required TResult Function(FetchProductsEvents value) fetchProducts,
     required TResult Function(NavigateToDetailEvent value) navigateToDetail,
+    required TResult Function(SearchProductsEvent value) searchProducts,
   }) {
     return fetchProducts(this);
   }
@@ -196,6 +206,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchProductsEvents value)? fetchProducts,
     TResult? Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult? Function(SearchProductsEvent value)? searchProducts,
   }) {
     return fetchProducts?.call(this);
   }
@@ -205,6 +216,7 @@ class _$FetchProductsEventsImpl implements FetchProductsEvents {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchProductsEvents value)? fetchProducts,
     TResult Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult Function(SearchProductsEvent value)? searchProducts,
     required TResult orElse(),
   }) {
     if (fetchProducts != null) {
@@ -309,6 +321,7 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int limit, int offset) fetchProducts,
     required TResult Function(BuildContext context, int id) navigateToDetail,
+    required TResult Function(String query) searchProducts,
   }) {
     return navigateToDetail(context, id);
   }
@@ -318,6 +331,7 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int limit, int offset)? fetchProducts,
     TResult? Function(BuildContext context, int id)? navigateToDetail,
+    TResult? Function(String query)? searchProducts,
   }) {
     return navigateToDetail?.call(context, id);
   }
@@ -327,6 +341,7 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int limit, int offset)? fetchProducts,
     TResult Function(BuildContext context, int id)? navigateToDetail,
+    TResult Function(String query)? searchProducts,
     required TResult orElse(),
   }) {
     if (navigateToDetail != null) {
@@ -340,6 +355,7 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(FetchProductsEvents value) fetchProducts,
     required TResult Function(NavigateToDetailEvent value) navigateToDetail,
+    required TResult Function(SearchProductsEvent value) searchProducts,
   }) {
     return navigateToDetail(this);
   }
@@ -349,6 +365,7 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchProductsEvents value)? fetchProducts,
     TResult? Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult? Function(SearchProductsEvent value)? searchProducts,
   }) {
     return navigateToDetail?.call(this);
   }
@@ -358,6 +375,7 @@ class _$NavigateToDetailEventImpl implements NavigateToDetailEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchProductsEvents value)? fetchProducts,
     TResult Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult Function(SearchProductsEvent value)? searchProducts,
     required TResult orElse(),
   }) {
     if (navigateToDetail != null) {
@@ -380,6 +398,154 @@ abstract class NavigateToDetailEvent implements ProductEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NavigateToDetailEventImplCopyWith<_$NavigateToDetailEventImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SearchProductsEventImplCopyWith<$Res> {
+  factory _$$SearchProductsEventImplCopyWith(_$SearchProductsEventImpl value,
+          $Res Function(_$SearchProductsEventImpl) then) =
+      __$$SearchProductsEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String query});
+}
+
+/// @nodoc
+class __$$SearchProductsEventImplCopyWithImpl<$Res>
+    extends _$ProductEventCopyWithImpl<$Res, _$SearchProductsEventImpl>
+    implements _$$SearchProductsEventImplCopyWith<$Res> {
+  __$$SearchProductsEventImplCopyWithImpl(_$SearchProductsEventImpl _value,
+      $Res Function(_$SearchProductsEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProductEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? query = null,
+  }) {
+    return _then(_$SearchProductsEventImpl(
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SearchProductsEventImpl implements SearchProductsEvent {
+  const _$SearchProductsEventImpl({required this.query});
+
+  @override
+  final String query;
+
+  @override
+  String toString() {
+    return 'ProductEvent.searchProducts(query: $query)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SearchProductsEventImpl &&
+            (identical(other.query, query) || other.query == query));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, query);
+
+  /// Create a copy of ProductEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SearchProductsEventImplCopyWith<_$SearchProductsEventImpl> get copyWith =>
+      __$$SearchProductsEventImplCopyWithImpl<_$SearchProductsEventImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int limit, int offset) fetchProducts,
+    required TResult Function(BuildContext context, int id) navigateToDetail,
+    required TResult Function(String query) searchProducts,
+  }) {
+    return searchProducts(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int limit, int offset)? fetchProducts,
+    TResult? Function(BuildContext context, int id)? navigateToDetail,
+    TResult? Function(String query)? searchProducts,
+  }) {
+    return searchProducts?.call(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int limit, int offset)? fetchProducts,
+    TResult Function(BuildContext context, int id)? navigateToDetail,
+    TResult Function(String query)? searchProducts,
+    required TResult orElse(),
+  }) {
+    if (searchProducts != null) {
+      return searchProducts(query);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(FetchProductsEvents value) fetchProducts,
+    required TResult Function(NavigateToDetailEvent value) navigateToDetail,
+    required TResult Function(SearchProductsEvent value) searchProducts,
+  }) {
+    return searchProducts(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(FetchProductsEvents value)? fetchProducts,
+    TResult? Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult? Function(SearchProductsEvent value)? searchProducts,
+  }) {
+    return searchProducts?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(FetchProductsEvents value)? fetchProducts,
+    TResult Function(NavigateToDetailEvent value)? navigateToDetail,
+    TResult Function(SearchProductsEvent value)? searchProducts,
+    required TResult orElse(),
+  }) {
+    if (searchProducts != null) {
+      return searchProducts(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SearchProductsEvent implements ProductEvent {
+  const factory SearchProductsEvent({required final String query}) =
+      _$SearchProductsEventImpl;
+
+  String get query;
+
+  /// Create a copy of ProductEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SearchProductsEventImplCopyWith<_$SearchProductsEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
