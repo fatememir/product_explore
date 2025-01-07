@@ -1,12 +1,16 @@
 import 'package:dio/dio.dart';
+import '../../../main.dart';
 import '../../utils/constant/constant.dart';
+import 'package:flutter/material.dart';
 
 extension DioExtensions on Dio {
-  Future<T> safeGet<T>(String path, T Function(dynamic json) mapper, {
-    dynamic data,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
+  Future<T> safeGet<T>(
+      String path,
+      T Function(dynamic json) mapper, {
+        dynamic data,
+        ProgressCallback? onSendProgress,
+        ProgressCallback? onReceiveProgress,
+      }) async {
     Options? options;
 
     try {
@@ -17,32 +21,35 @@ extension DioExtensions on Dio {
         onReceiveProgress: onReceiveProgress,
       );
 
-
       if (response.statusCode == 200) {
         return mapper(response.data);
       } else {
+        _showSnackbar('Error: ${response.statusCode}');
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
-          type: DioExceptionType.badResponse, // Example for failed response type
+          type: DioExceptionType.badResponse,
         );
       }
     } on DioException catch (e) {
-      // Handle Dio exceptions
       if (e.response != null) {
-        print('DioException with response: ${e.response?.data}');
+        _showSnackbar('DioException: ${e.response?.data}');
       } else {
-        print('DioException without response: $e');
+        _showSnackbar('DioException without response: $e');
       }
       rethrow;
     } catch (e) {
-      // Handle any other exceptions
-      print('Unexpected error: $e');
-      throw e;
+      _showSnackbar('Unexpected error: $e');
+      rethrow;
     }
   }
+
+  void _showSnackbar(String message) {
+    scaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
 }
-
-
-
-
