@@ -17,32 +17,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   ProductBloc({
     required this.getProducts,
-  }) : super(const ProductState.initial()) {
+  }) : super(Initial()) {
     on<FetchProductsEvents>(_onFetchProducts);
     on<NavigateToDetailEvent>(_onGoToProductDetail);
   }
 
   Future<void> _onFetchProducts(FetchProductsEvents event, Emitter<ProductState> emit) async {
-    final currentProducts = state is Loaded ? (state as Loaded).products : [];
-
-    if (event.offset == 0) {
-      emit(const ProductState.loading());
-    }
+    emit(ProductState.loading());
 
     final failureOrSuccess = await getProducts(GetProductRequestModel(limit: event.limit, offset: event.offset));
-    failureOrSuccess.fold(
-      (failure) => emit(ProductState.error(message: failure.message)),
-      (newProducts) {
-        if (newProducts.isEmpty && event.offset != 0) {
-          return;
-        }
+    failureOrSuccess.fold((l) => emit(ProductState.error(message: l.message)), (r) => emit(ProductState.loaded(products: r)));
 
-        emit(ProductState.loaded(products: [...currentProducts, ...newProducts]));
-      },
-    );
   }
 
   Future<void> _onGoToProductDetail(NavigateToDetailEvent event, Emitter<ProductState> emit) async {
-    emit(ProductState.navigateToDetail(id: event.id));
+    emit(ProductState.navigateToDetail(id:event.id));
   }
 }

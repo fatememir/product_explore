@@ -22,6 +22,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   }
 
   Future<void> _onFetchProductDetail(FetchProductDetails event, Emitter<ProductDetailState> emit) async {
+    emit(const ProductDetailState.loading());
     final failureOrSuccess = await getProductDetails(event.productId);
     failureOrSuccess.fold(
             (failure) => emit(ProductDetailState.error(message: failure.message)),

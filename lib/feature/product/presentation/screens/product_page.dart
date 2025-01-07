@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../domain/entities/product.dart';
 import '../bloc/product_bloc.dart';
 import '../widget/product_list_item.dart';
@@ -66,7 +67,12 @@ class _ProductPageState extends State<ProductPage> {
             setState(() {
               _isLoadingMore = false;
             });
-          } else if (state is NavigateToDetail) {}
+          } else if (state is NavigateToDetail) {
+            context.go(
+              "/product/productDetail",
+              extra: state.id,
+            );
+          }
         },
         child: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
