@@ -5,9 +5,9 @@ Features responsive UI, async data fetching, and clean architecture.
 
 ## Overview
 
-"Elevate your projects with Product Explore – the ultimate template for creating sleek and intuitive
+Elevate your projects with Product Explore – the ultimate template for creating sleek and intuitive
 product discovery apps. Featuring seamless search, detailed views, and organized lists, it’s your
-key to crafting standout platforms!"
+key to crafting standout platforms!
 
 ### Project Structure
 

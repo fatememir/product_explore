@@ -8,7 +8,7 @@ class CustomTheme {
     return ThemeData(
       primaryColor: MyColors.blue,
       scaffoldBackgroundColor: Colors.white,
-      fontFamily: 'IranYekan',
+      fontFamily: 'Mouldy',
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontWeight: FontWeight.w800,
@@ -31,7 +31,7 @@ class CustomTheme {
           fontSize: 16,
         ),
         bodyMedium: TextStyle(
-          fontFamily: "IranYekan",
+          fontFamily: "Mouldy",
           fontWeight: FontWeight.w400,
           color: MyColors.regentGray,
           fontSize: 15,
@@ -51,7 +51,7 @@ class CustomTheme {
     return ThemeData(
       primaryColor: MyColors.blue,
       scaffoldBackgroundColor: MyColors.blackPearl,
-      fontFamily: 'IranYekan',
+      fontFamily: 'Mouldy',
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontWeight: FontWeight.w800,
@@ -74,7 +74,7 @@ class CustomTheme {
           fontSize: 16,
         ),
         bodyMedium: TextStyle(
-          fontFamily: "IranYekan",
+          fontFamily: "Mouldy",
           fontWeight: FontWeight.w400,
           color: MyColors.regentGray,
           fontSize: 15,
