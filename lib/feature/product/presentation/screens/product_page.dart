@@ -101,12 +101,15 @@ class _ProductPageState extends State<ProductPage> {
             if (state is Loading && _offset == 0) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is Loaded) {
-              if (state.products.isNotEmpty) {
-                return _buildProductList(state.products);
+              final products = state.products.products ?? [];
+
+              if (products.isNotEmpty) {
+                return _buildProductList(products);
               } else {
                 return const Center(child: Text('No Products Found'));
               }
-            } else if (state is Error) {
+            }
+            else if (state is Error) {
               return Center(child: Text(state.message));
             }
 

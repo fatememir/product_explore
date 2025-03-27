@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widgets/images.dart';
 import '../bloc/product_detail/product_detail_bloc.dart';
+import '../widget/product_detail_text_row.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final int productId;
@@ -10,7 +11,9 @@ class ProductDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProductDetailBloc>().add(ProductDetailEvent.fetchProductDetails(productId: productId));
+    context.read<ProductDetailBloc>().add(
+          ProductDetailEvent.fetchProductDetails(productId: productId),
+        );
 
     return Scaffold(
       appBar: AppBar(
@@ -31,9 +34,9 @@ class ProductDetailsPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     child: product.thumbnail != null
                         ? cashImage(
-                      product.thumbnail,
-                      height: 250,
-                    )
+                            product.thumbnail,
+                            height: 250,
+                          )
                         : const Placeholder(fallbackHeight: 250, fallbackWidth: double.infinity),
                   ),
                   const SizedBox(height: 16),
@@ -43,16 +46,14 @@ class ProductDetailsPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Price: \$${product.price?.toStringAsFixed(2)}',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green[700]),
-                    textAlign: TextAlign.center,
+                  ProductDetailRow(
+                    label: 'Price',
+                    value: '\$${product.price?.toStringAsFixed(2) ?? "--"}',
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Brand: ${product.brand}',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green[700]),
-                    textAlign: TextAlign.center,
+                  ProductDetailRow(
+                    label: 'Brand',
+                    value: product.brand ?? "--",
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -61,16 +62,15 @@ class ProductDetailsPage extends StatelessWidget {
                       const Icon(Icons.category, color: Colors.amber, size: 20),
                       const SizedBox(width: 4),
                       Text(
-                        '${product.category}',
+                        product.category ?? "--",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Stock: ${product.stock?.toString()}',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green[700]),
-                    textAlign: TextAlign.center,
+                  ProductDetailRow(
+                    label: 'Stock',
+                    value: product.stock?.toString() ?? "--",
                   ),
                   const SizedBox(height: 16),
                   Padding(

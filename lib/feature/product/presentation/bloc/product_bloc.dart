@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:product_explore/feature/product/domain/entities/product_list.dart';
+import '../../data/models/product/product_list_model.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/model/get_produt_request_model.dart';
 import '../../domain/usecases/get_products.dart';
@@ -36,15 +38,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     failureOrSuccess.fold(
           (failure) => emit(ProductState.error(message: failure.message)),
-          (newProducts) {
+          (productListEntity) {
+        final newProducts = productListEntity.products;
+
         if (event.offset == 0) {
-          _allProducts = newProducts;
+          _allProducts = productListEntity.products ?? [];
         } else {
-          _allProducts.addAll(newProducts);
+          _allProducts.addAll(newProducts ?? []);
         }
-        emit(ProductState.loaded(products: List.from(_allProducts)));
+
+        emit(ProductState.loaded( products: ProductListModel(products: List.from(_allProducts))));
       },
     );
+
   }
 
   void _onGoToProductDetail(NavigateToDetailEvent event, Emitter<ProductState> emit) {
@@ -61,10 +67,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }).toList();
 
       if (filteredProducts.isEmpty) {
-        emit(ProductState.loaded(products: _allProducts));
+        emit(ProductState.loaded(
+          products: ProductListEntity(products: List.from(_allProducts)),
+        ));
       } else {
-        emit(ProductState.loaded(products: filteredProducts));
+        emit(ProductState.loaded(
+          products: ProductListEntity(products: filteredProducts),
+        ));
       }
     }
   }
+
 }

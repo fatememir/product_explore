@@ -3,14 +3,16 @@ import '../../../main.dart';
 import '../../utils/constant/constant.dart';
 import 'package:flutter/material.dart';
 
+import '../api_result.dart';
+
 extension DioExtensions on Dio {
-  Future<T> safeGet<T>(
-      String path,
-      T Function(dynamic json) mapper, {
-        dynamic data,
-        ProgressCallback? onSendProgress,
-        ProgressCallback? onReceiveProgress,
-      }) async {
+  Future<ApiResult<T>> safeGet<T>(
+    String path,
+    T Function(dynamic json) mapper, {
+    dynamic data,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     Options? options;
 
     try {
@@ -22,14 +24,11 @@ extension DioExtensions on Dio {
       );
 
       if (response.statusCode == 200) {
-        return mapper(response.data);
+        final mapped = mapper(response.data);
+        return Success<T>(mapped, "Success", true);
       } else {
         _showSnackbar('Error: ${response.statusCode}');
-        throw DioException(
-          requestOptions: response.requestOptions,
-          response: response,
-          type: DioExceptionType.badResponse,
-        );
+        return InternalError<T>();
       }
     } on DioException catch (e) {
       if (e.response != null) {
@@ -37,10 +36,13 @@ extension DioExtensions on Dio {
       } else {
         _showSnackbar('DioException without response: $e');
       }
-      rethrow;
+
+      return NetworkError<T>([
+        ApiError()
+      ]);
     } catch (e) {
       _showSnackbar('Unexpected error: $e');
-      rethrow;
+      return InternalError<T>();
     }
   }
 
